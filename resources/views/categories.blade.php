@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Admin Categories page</title>
     @vite('resources/css/app.css')
 
 </head>
 
 <body>
-
-    <x-navbar :name="$name" />
-
+    
+<x-navbar :name="$name" />
 </body>
 
 </html>

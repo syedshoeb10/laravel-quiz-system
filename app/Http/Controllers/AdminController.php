@@ -40,4 +40,19 @@ class AdminController extends Controller
             return redirect('admin-login');
         }
     }
+
+    public function categories()
+    {
+        $admin = session::get('admin');
+        if ($admin) {
+            return view('categories', ["name" => $admin->name]);
+        } else {
+            return redirect('admin-login');
+        }
+    }
+    public function logout()
+    {
+        session::forget('admin');
+        return redirect('admin-login');
+    }
 }
