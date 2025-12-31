@@ -6,7 +6,7 @@
         <div class="space-x-5">
             <a class="text-gray-700 hover:text-blue-500" href="/dashboard">Dashboard</a>
             <a class="text-gray-700 hover:text-blue-500" href="/admin-categories">Categoris</a>
-            <a class="text-gray-700 hover:text-blue-500" href="">Quiz</a>
+            <a class="text-gray-700 hover:text-blue-500" href="/add-quiz">Quiz</a>
             <a class="text-gray-700 hover:text-blue-500" href="">welcome {{$name}}</a>
             <a class="text-gray-700 hover:text-blue-500" href="/admin-logout">Log out</a>
         </div>
