@@ -12,105 +12,129 @@
 
     <x-navbar :name="$name" />
 
-    <div class="bg-white p-6 rounded-2xl shadow">
-        @if(!session('quizDetails'))
-        <h2 class="text-2xl font-semibold mb-4">Add Quiz</h2>
+   <div class="bg-white p-8 rounded-2xl shadow max-w-3xl mx-auto">
 
-        <form action="/add-quiz" method="get" class="flex gap-4">
-            <input
-                type="text"
-                name="quiz"
-                placeholder="Enter Quiz name"
-                class="flex-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
-                required>
+    @if(!session('quizDetails'))
+        <!-- ADD QUIZ -->
+        <h2 class="text-2xl font-semibold mb-6 text-gray-800">Add Quiz</h2>
+
+        <form action="/add-quiz" method="get" class="space-y-5">
+
             <div>
-                <select name="category_id"
-                    class="flex-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
-                    required>>
-                    @foreach($categories as $category)
-                    <option value="{{$category->id}}">{{$category->name}}</option>
-                    @endforeach
+                <label class="block text-sm font-medium text-gray-600 mb-1">
+                    Quiz Name
+                </label>
+                <input
+                    type="text"
+                    name="quiz"
+                    placeholder="Enter Quiz name"
+                    class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
+                    required>
+            </div>
 
+            <div>
+                <label class="block text-sm font-medium text-gray-600 mb-1">
+                    Category
+                </label>
+                <select
+                    name="category_id"
+                    class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
+                    required>
+                    <option value="">Select Category</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">
+                            {{ $category->name }}
+                        </option>
+                    @endforeach
                 </select>
             </div>
 
+            <div class="pt-2">
+                <button
+                    type="submit"
+                    class="bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700 transition">
+                    Add Quiz
+                </button>
+            </div>
 
-            <button
-                type="submit"
-                class="bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700">
-                Add
-            </button>
-            @error('category')
-            <div class="text-red-500">{{$message}}</div>
-            @enderror
-    </div>
-    </form>
+        </form>
+
     @else
-    <span class="text-2xl font-semibold mb-4 text-green-500">Quiz : {{session('quizDetails')->name}}</span>
-    <h2 class="text-2xl font-semibold mb-4">Add Mcqs</h2>
-    <form action="" method="get" class="space-y-4">
-
-        <!-- Textarea -->
-        <textarea
-            name="quiz_description"
-            placeholder="Enter Quiz Description"
-            class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
-            rows="4"
-            required></textarea>
-
-        <!-- Input 1 -->
-        <input
-            type="text"
-            name="question_1"
-            placeholder="Enter Question 1"
-            class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
-            required>
-
-        <!-- Input 2 -->
-        <input
-            type="text"
-            name="question_2"
-            placeholder="Enter Question 2"
-            class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
-            required>
-
-        <!-- Input 3 -->
-        <input
-            type="text"
-            name="question_3"
-            placeholder="Enter Question 3"
-            class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
-            required>
-
-        <!-- Input 4 -->
-        <input
-            type="text"
-            name="question_4"
-            placeholder="Enter Question 4"
-            class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
-            required>
-
-        <div>
-            <select name="right answer" id="" class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300">
-                <option value="">Select option</option>
-                <option value="">A</option>
-                <option value="">B</option>
-                <option value="">C</option>
-                <option value="">D</option>
-            </select>
+        <!-- ADD MCQS -->
+        <div class="mb-6">
+            <span class="inline-block text-lg font-semibold text-green-600">
+                Quiz: {{ session('quizDetails')->name }}
+            </span>
         </div>
-           <button
-                type="submit"
-                class="bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700">
-                Add More
-            </button>
-               <button
-                type="submit"
-                class="bg-green-600 text-white px-6 py-2 rounded-xl">
-                Add and submit
-            </button>
 
-    </form>
+        <h2 class="text-2xl font-semibold mb-4 text-gray-800">Add MCQs</h2>
 
+        <form action="add-mcq" method="post" class="space-y-5">
+         
+        @csrf
+            <!-- Description -->
+
+            <!-- Question -->
+            <div>
+                <label class="block text-sm font-medium text-gray-600 mb-1">
+                    Question
+                </label>
+                <input
+                    type="text"
+                    name="question"
+                    placeholder="Enter your question"
+                    class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
+                    required>
+            </div>
+
+            <!-- Options -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input type="text" name="a" placeholder="Option A"
+                    class="px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300" required>
+
+                <input type="text" name="b" placeholder="Option B"
+                    class="px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300" required>
+
+                <input type="text" name="c" placeholder="Option C"
+                    class="px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300" required>
+
+                <input type="text" name="d" placeholder="Option D"
+                    class="px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300" required>
+            </div>
+
+            <!-- Right Answer -->
+            <div>
+                <label class="block text-sm font-medium text-gray-600 mb-1">
+                    Correct Answer
+                </label>
+                <select
+                    name="correct_answer"
+                    class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
+                    required>
+                    <option value="">Select option</option>
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                </select>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex gap-4 pt-4">
+                <button
+                    type="submit" value="add-more" name="submit"
+                    class="bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700 transition">
+                    Add More
+                </button>
+
+                <button
+                    type="submit" value="done" name="submit"
+                    class="bg-green-600 text-white px-6 py-2 rounded-xl hover:bg-green-700 transition">
+                    Add & Submit
+                </button>
+            </div>
+
+        </form>
     @endif
-    </div>
+
+</div>
