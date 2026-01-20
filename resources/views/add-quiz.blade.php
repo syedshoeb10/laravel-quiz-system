@@ -12,9 +12,9 @@
 
     <x-navbar :name="$name" />
 
-   <div class="bg-white p-8 rounded-2xl shadow max-w-3xl mx-auto">
+    <div class="bg-white p-8 rounded-2xl shadow max-w-3xl mx-auto">
 
-    @if(!session('quizDetails'))
+        @if(!session('quizDetails'))
         <!-- ADD QUIZ -->
         <h2 class="text-2xl font-semibold mb-6 text-gray-800">Add Quiz</h2>
 
@@ -42,9 +42,9 @@
                     required>
                     <option value="">Select Category</option>
                     @foreach($categories as $category)
-                        <option value="{{ $category->id }}">
-                            {{ $category->name }}
-                        </option>
+                    <option value="{{ $category->id }}">
+                        {{ $category->name }}
+                    </option>
                     @endforeach
                 </select>
             </div>
@@ -59,7 +59,7 @@
 
         </form>
 
-    @else
+        @else
         <!-- ADD MCQS -->
         <div class="mb-6">
             <span class="inline-block text-lg font-semibold text-green-600">
@@ -70,8 +70,8 @@
         <h2 class="text-2xl font-semibold mb-4 text-gray-800">Add MCQs</h2>
 
         <form action="add-mcq" method="post" class="space-y-5">
-         
-        @csrf
+
+            @csrf
             <!-- Description -->
 
             <!-- Question -->
@@ -82,42 +82,83 @@
                 <input
                     type="text"
                     name="question"
+                    value="{{ old('question') }}"
                     placeholder="Enter your question"
-                    class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
-                    required>
+                    class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300
+               @error('question') border-red-500 @enderror">
+
+                @error('question')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- Options -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" name="a" placeholder="Option A"
-                    class="px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300" required>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
 
-                <input type="text" name="b" placeholder="Option B"
-                    class="px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300" required>
+                <div>
+                    <input type="text" name="a" value="{{ old('a') }}" placeholder="Option A"
+                        class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300
+                   @error('a') border-red-500 @enderror">
 
-                <input type="text" name="c" placeholder="Option C"
-                    class="px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300" required>
+                    @error('a')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
 
-                <input type="text" name="d" placeholder="Option D"
-                    class="px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300" required>
+                <div>
+                    <input type="text" name="b" value="{{ old('b') }}" placeholder="Option B"
+                        class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300
+                   @error('b') border-red-500 @enderror">
+
+                    @error('b')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <input type="text" name="c" value="{{ old('c') }}" placeholder="Option C"
+                        class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300
+                   @error('c') border-red-500 @enderror">
+
+                    @error('c')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div>
+                    <input type="text" name="d" value="{{ old('d') }}" placeholder="Option D"
+                        class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300
+                   @error('d') border-red-500 @enderror">
+
+                    @error('d')
+                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
             </div>
 
-            <!-- Right Answer -->
-            <div>
+            <!-- Correct Answer -->
+            <div class="mt-4">
                 <label class="block text-sm font-medium text-gray-600 mb-1">
                     Correct Answer
                 </label>
                 <select
                     name="correct_answer"
-                    class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
-                    required>
+                    class="w-full px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300
+               @error('correct_answer') border-red-500 @enderror">
+
                     <option value="">Select option</option>
                     <option value="A">A</option>
                     <option value="B">B</option>
                     <option value="C">C</option>
                     <option value="D">D</option>
                 </select>
+
+                @error('correct_answer')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
+
 
             <!-- Buttons -->
             <div class="flex gap-4 pt-4">
@@ -132,9 +173,11 @@
                     class="bg-green-600 text-white px-6 py-2 rounded-xl hover:bg-green-700 transition">
                     Add & Submit
                 </button>
+                <a href="/end-quiz" class="bg-red-600 text-white px-6 py-2 rounded-xl hover:bg-red-700 transition">finish Quiz</a>
+                
             </div>
 
         </form>
-    @endif
+        @endif
 
-</div>
+    </div>

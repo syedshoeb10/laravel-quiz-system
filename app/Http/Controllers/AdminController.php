@@ -107,6 +107,15 @@ class AdminController extends Controller
     {
         // return $request;
         $mcq = new Mcq();
+        $validation = $request->validate([
+            'question'        => 'required|string|min:5|max:255',
+            'a'               => 'required',
+            'b'               => 'required',
+            'c'               => 'required',
+            'd'               => 'required',
+            'correct_answer'  => 'required|in:A,B,C,D',
+
+        ]);
         $quiz = Session::get('quizDetails');
         $admin = Session::get('admin');
 
@@ -121,13 +130,36 @@ class AdminController extends Controller
         $mcq->quiz_id = $quiz->id;
         $mcq->category_id = $quiz->category_id;
 
-        if($mcq->save()){
-            if($request->submit=="add-more"){
+        if ($mcq->save()) {
+            if ($request->submit == "add-more") {
                 return redirect(url()->previous());
-            }else{
+            } else {
                 Session::forget('quizDetails');
                 return redirect("/admin-categories");
             }
+        }
+    }
+
+    public function endQuiz()
+    {
+        Session::forget('quizDetails');
+        return redirect("/admin-categories");
+    }
+
+    public function quizList($id, $category)
+    {
+        $admin = Session::get('admin');
+
+        if ($admin) {
+            $quizData = Quiz::where('category_id', $id)->get();
+
+            return view('quiz-list', [
+                'name' => $admin->name,
+                'quizData' => $quizData,
+                'category' => $category
+            ]);
+        } else {
+            return redirect('admin-login');
         }
     }
 }

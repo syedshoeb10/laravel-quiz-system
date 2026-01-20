@@ -23,54 +23,32 @@
 
         {{-- Add Category Form --}}
         <div class="bg-white p-6 rounded-2xl shadow">
-            <h2 class="text-2xl font-semibold mb-4">Add Category</h2>
+            <h2 class="text-2xl font-semibold mb-4">Category name : {{$category}}</h2>
 
-            <form action="/add-category" method="POST" class="flex gap-4">
-                @csrf
-
-                <input
-                    type="text"
-                    name="category"
-                    placeholder="Enter category name"
-                    class="flex-1 px-4 py-2 border rounded-xl focus:outline-none focus:ring focus:ring-blue-300"
-                    required>
-
-                <button
-                    type="submit"
-                    class="bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700">
-                    Add
-                </button>
-                @error('category')
-                <div class="text-red-500">{{$message}}</div>
-                @enderror
-        </div>
-        </form>
+       
     </div>
 
     {{-- Category List --}}
     <div class="bg-white p-6 rounded-2xl shadow">
-        <h2 class="text-2xl font-semibold mb-4">Category List</h2>
+        <h2 class="text-2xl font-semibold mb-4">Quiz List</h2>
 
         <table class="w-full border-collapse">
             <thead>
                 <tr class="bg-gray-100 text-left">
                     <th class="p-3">#</th>
-                    <th class="p-3">Category Name</th>
-                    <th class="p-3">Created By</th>
+                    <th class="p-3">Quiz id </th>
+                    <th class="p-3">Quiz name</th>
                     <th class="p-3 text-center">Action</th>
                 </tr>
             </thead>
 
             <tbody>
-                @forelse($categories as $category)
+                @forelse($quizData as $item)
                 <tr class="border-t">
-                    <td class="p-3">{{ $category->id }}</td>
-                    <td class="p-3">{{ $category->name }}</td>
-                    <td class="p-3">{{ $category->creator }}</td>
+                    <td class="p-3">{{ $item->id }}</td>
+                    <td class="p-3">{{ $item->name }}</td>
                     <td class="p-3 text-center">
-                        <form action="{{ url('/delete-category/'.$category->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
+                           
 
                             <button
                                 type="submit"
@@ -79,7 +57,7 @@
                                 Delete
                             </button>
                             <a
-                                href="{{ url('quiz-list/'.$category->id.'/'.$category->name) }}"
+                                href=""
                                 class="bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700">
                                 View
                             </a>
@@ -91,7 +69,7 @@
                 @empty
                 <tr>
                     <td colspan="4" class="p-4 text-center text-gray-500">
-                        No categories found
+                        No Quiz  found
                     </td>
                 </tr>
                 @endforelse
